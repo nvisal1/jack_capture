@@ -1130,7 +1130,8 @@ static int open_soundfile(void){
   if(filename==NULL){
     if (rotateframe>0){ // always use .NUM. with rotation
       filename=my_calloc(1,strlen(base_filename)+500);
-      sprintf(filename,"%s.%0*d.%s",base_filename,leading_zeros+1,0,soundfile_format);
+      // sprintf(filename,"%s.%0*d.%s",base_filename,leading_zeros+1,0,soundfile_format);
+      sprintf(filename,"%s%0*d.%s",filename_prefix,leading_zeros+1,++seq,soundfile_format);
     }else{
       filename=strdup(base_filename);
     }
