@@ -1028,8 +1028,9 @@ static void hook_file_rotated(char *oldfn, char *newfn, int num, int xruns, int 
 //////////////////////// DISK ///////////////////////////////////////
 /////////////////////////////////////////////////////////////////////
 
-// These four variables are used in case we break the 4GB barriere for standard wav files.
+// These five variables are used in case we break the 4GB barriere for standard wav files.
 static int num_files=1;
+static int seq=0;
 static int64_t disksize=0;
 static bool is_using_wav=true;
 static int bytes_per_frame;
@@ -1266,11 +1267,11 @@ static int rotate_file(size_t frames, int reset_totals){
 
   char *filename_new;
   filename_new=my_calloc(1,strlen(base_filename)+500);
-  sprintf(filename_new,"%s.%0*d.%s",base_filename,leading_zeros+1,num_files,soundfile_format);
+  sprintf(filename_new,"%s%0*d.%s",filename_prefix,leading_zeros+1,++seq,soundfile_format);
   print_message("Closing %s, and continue writing to %s.\n",filename,filename_new);
   num_files++;
 
-  hook_file_rotated(filename, filename_new, num_files, total_overruns + total_xruns, disk_errors);
+  hook_file_rotated(filename, filename_new, seq, total_overruns + total_xruns, disk_errors);
 
   free(filename);
   filename=filename_new;
