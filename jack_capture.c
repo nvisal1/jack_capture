@@ -2465,7 +2465,7 @@ void init_arguments(int argc, char *argv[]){
       base_filename=my_calloc(1,5000);
       for(int try=1;try<100000;try++){
           sprintf(base_filename,"%s%0*d.%s",filename_prefix,leading_zeros+1,++seq,soundfile_format);
-+         if(access(base_filename,F_OK)) break;
+          if(access(base_filename,F_OK)) break;
       }
     }
   }
